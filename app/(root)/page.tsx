@@ -1,3 +1,17 @@
-export default function Home() {
-  return <div>Hello admin</div>;
-}
+"use client";
+import { useStoreModal } from "@/hooks/useStoreModal";
+import { useEffect } from "react";
+
+const SetupPage = ({}) => {
+  const { isOpen, onOpen } = useStoreModal();
+
+  useEffect(() => {
+    if (!isOpen) {
+      onOpen();
+    }
+  }, [isOpen, onOpen]);
+
+  return <div>Root page</div>;
+};
+
+export default SetupPage;
