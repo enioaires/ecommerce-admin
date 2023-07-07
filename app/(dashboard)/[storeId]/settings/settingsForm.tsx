@@ -81,6 +81,7 @@ const SettingsForm: FC<settingsFormProps> = ({ initialData }) => {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onConfirm={onDelete}
+        label="store"
       />
       <div className="flex items-center justify-between">
         <Heading title="Settings" description="Manage store preferences" />

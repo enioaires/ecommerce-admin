@@ -8,6 +8,7 @@ interface alertModalProps {
   onClose: () => void;
   onConfirm: () => void;
   isLoading: boolean;
+  label: string;
 }
 
 const AlertModal: FC<alertModalProps> = ({
@@ -15,6 +16,7 @@ const AlertModal: FC<alertModalProps> = ({
   onClose,
   onConfirm,
   isLoading,
+  label,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -28,7 +30,7 @@ const AlertModal: FC<alertModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Are you sure you want to delete this store?"
+      title={`Are you sure you want to delete this ${label}?`}
       description="This action cannot be undone."
     >
       <div className="pt-6 space-x-2 flex items-center justify-end w-full">

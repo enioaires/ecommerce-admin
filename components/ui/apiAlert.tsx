@@ -19,7 +19,7 @@ const textMap: Record<apiAlertProps["variant"], string> = {
 
 const variantMap: Record<apiAlertProps["variant"], BadgeProps["variant"]> = {
   public: "secondary",
-  admin: "destructive",
+  admin: "default",
 };
 
 export const ApiAlert: FC<apiAlertProps> = ({
