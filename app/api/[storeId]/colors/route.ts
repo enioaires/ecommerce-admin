@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
+import { corsHeaders } from "@/lib/utils";
 
 export async function POST(
   req: Request,
@@ -70,7 +71,7 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(colors);
+    return NextResponse.json(colors, { headers: corsHeaders });
   } catch (error) {
     console.log("[COLORS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });

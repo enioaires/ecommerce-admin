@@ -1,0 +1,56 @@
+import { FC } from "react";
+import OrderClient from "./client";
+import prismadb from "@/lib/prismadb";
+import { OrderColumns } from "./columns";
+import { format } from "date-fns";
+import { formatter } from "@/lib/utils";
+
+interface ordersPageProps {
+  params: {
+    storeId: string;
+  };
+}
+
+const OrdersPage: FC<ordersPageProps> = async ({ params }) => {
+  const orders = await prismadb.order.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+    include: {
+      orderItems: {
+        include: {
+          product: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  const formattedOrders: OrderColumns[] = orders.map((item) => ({
+    id: item.id,
+    phone: item.phone,
+    address: item.address,
+    products: item.orderItems
+      .map((orderItem) => orderItem.product.name)
+      .join(", "),
+    totalPrice: formatter.format(
+      item.orderItems.reduce((total, item) => {
+        return total + Number(item.product.price);
+      }, 0)
+    ),
+    isPaid: item.isPaid,
+    createdAt: format(item.createdAt, "do MMMM yy HH:mm"),
+  }));
+
+  return (
+    <div className="flex-col">
+      <div className="flex-11 space-y-4 p-8 pt-6">
+        <OrderClient data={formattedOrders} />
+      </div>
+    </div>
+  );
+};
+
+export default OrdersPage;

@@ -29,7 +29,7 @@ const Client: FC<clientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
-      <DataTable data={data} columns={columns} searchKey="label" />
+      <DataTable data={data} columns={columns} searchKey="name" />
       <Heading title="API" description="API calls for Products" />
       <Separator />
       <ApiList entityName="products" entityIdName="productId" />

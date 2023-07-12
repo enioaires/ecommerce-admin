@@ -1,4 +1,5 @@
 import prismadb from "@/lib/prismadb";
+import { corsHeaders } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -104,13 +105,13 @@ export async function GET(
       return new NextResponse("Missing sizeId", { status: 400 });
     }
 
-    const deletedSize = await prismadb.size.findUnique({
+    const size = await prismadb.size.findUnique({
       where: {
         id: sizeId,
       },
     });
 
-    return NextResponse.json(deletedSize);
+    return NextResponse.json(size, { headers: corsHeaders });
   } catch (error: any) {
     console.log(error);
     return new NextResponse(error, { status: 500 });

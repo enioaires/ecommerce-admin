@@ -1,4 +1,5 @@
 import prismadb from "@/lib/prismadb";
+import { corsHeaders } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -108,9 +109,12 @@ export async function GET(
       where: {
         id: categoryId,
       },
+      include: {
+        billboard: true,
+      },
     });
 
-    return NextResponse.json(deletedCategory);
+    return NextResponse.json(deletedCategory, { headers: corsHeaders });
   } catch (error: any) {
     console.log(error);
     return new NextResponse(error, { status: 500 });

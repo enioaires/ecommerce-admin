@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
+import { corsHeaders } from "@/lib/utils";
 
 export async function POST(
   req: Request,
@@ -72,7 +73,7 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(billboards);
+    return NextResponse.json(billboards, { headers: corsHeaders });
   } catch (error) {
     console.log("[BILLBOARDS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });

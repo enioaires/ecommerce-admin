@@ -1,4 +1,5 @@
 import prismadb from "@/lib/prismadb";
+import { corsHeaders } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -110,7 +111,7 @@ export async function GET(
       },
     });
 
-    return NextResponse.json(deletedBillboard);
+    return NextResponse.json(deletedBillboard, { headers: corsHeaders });
   } catch (error: any) {
     console.log(error);
     return new NextResponse(error, { status: 500 });
