@@ -26,12 +26,15 @@ const ProductsPage: FC<billboardsPageProps> = async ({ params }) => {
     },
   });
 
+  console.log(products);
+
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
     name: item.name,
     isFeatured: item.isFeatured,
     isArchived: item.isArchived,
     price: formatter.format(item.price.toNumber()),
+    stock: item.stock,
     category: item.category.name,
     size: item.size.name,
     color: item.color.value,

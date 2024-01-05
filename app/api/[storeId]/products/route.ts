@@ -18,6 +18,7 @@ export async function POST(
       categoryId,
       sizeId,
       colorId,
+      stockSize,
       isFeatured,
       isArchived,
       images,
@@ -33,13 +34,12 @@ export async function POST(
       !categoryId ||
       !sizeId ||
       !colorId ||
+      !stockSize ||
       !images ||
       !images.length
     ) {
       return new NextResponse("Missing data", { status: 400 });
     }
-
-    console.log(params);
 
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
@@ -63,6 +63,7 @@ export async function POST(
         categoryId,
         sizeId,
         colorId,
+        stock: stockSize,
         isFeatured,
         isArchived,
         images: {

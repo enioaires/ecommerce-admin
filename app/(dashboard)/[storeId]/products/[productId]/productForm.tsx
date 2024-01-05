@@ -51,6 +51,9 @@ const formSchema = z.object({
   categoryId: z.string().nonempty({ message: "Category is required" }),
   colorId: z.string().nonempty({ message: "Color is required" }),
   sizeId: z.string().nonempty({ message: "Size is required" }),
+  stockSize: z.coerce
+    .number()
+    .positive({ message: "Stock size must be positive" }),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
 });
@@ -79,6 +82,7 @@ const ProductForm: FC<ProductFormProps> = ({
       ? {
           ...initialData,
           price: parseFloat(String(initialData?.price)),
+          stockSize: parseFloat(String(initialData?.stock)),
         }
       : {
           name: "",
@@ -87,6 +91,7 @@ const ProductForm: FC<ProductFormProps> = ({
           categoryId: "",
           colorId: "",
           sizeId: "",
+          stockSize: 1,
           isFeatured: false,
           isArchived: false,
         },
@@ -317,6 +322,23 @@ const ProductForm: FC<ProductFormProps> = ({
                     </SelectContent>
                   </Select>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="stockSize"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Stock</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isLoading}
+                      placeholder="10"
+                      type="number"
+                      {...field}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />

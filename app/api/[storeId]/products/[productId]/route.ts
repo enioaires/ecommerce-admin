@@ -18,6 +18,7 @@ export async function PATCH(
       categoryId,
       sizeId,
       colorId,
+      stockSize,
       isFeatured,
       isArchived,
       images,
@@ -33,6 +34,7 @@ export async function PATCH(
       !categoryId ||
       !sizeId ||
       !colorId ||
+      !stockSize ||
       !images ||
       !images.length
     ) {
@@ -64,6 +66,7 @@ export async function PATCH(
         categoryId,
         sizeId,
         colorId,
+        stock: stockSize,
         isFeatured,
         isArchived,
         images: {
@@ -85,6 +88,17 @@ export async function PATCH(
         },
       },
     });
+
+    if (stockSize === 0) {
+      await prismadb.product.update({
+        where: {
+          id: productId,
+        },
+        data: {
+          isArchived: true,
+        },
+      });
+    }
 
     return NextResponse.json(updatedProduct);
   } catch (error: any) {
